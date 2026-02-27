@@ -1,0 +1,36 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Quote Rotator</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+    .card { max-width: 700px; padding: 1.5rem; border: 1px solid #ddd; border-radius: 12px; }
+    .quote { font-size: 1.25rem; line-height: 1.6; }
+    .muted { color: #777; font-size: 0.9rem; margin-top: .75rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Quote Rotator</h1>
+    <p class="quote" id="q">Loading quote...</p>
+    <p class="muted">This page auto-refreshes the quote every 2s from Redis.</p>
+  </div>
+
+  <script>
+    async function loadQuote() {
+      try {
+        const res = await fetch("/current-quote");
+        const data = await res.json();
+        document.getElementById("q").textContent = data.quote || "No quote yet.";
+      } catch {
+        document.getElementById("q").textContent = "Error fetching quote.";
+      }
+    }
+    loadQuote();
+    setInterval(loadQuote, 2000);
+  </script>
+</body>
+</html>
+
