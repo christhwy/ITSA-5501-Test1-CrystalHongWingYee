@@ -1,0 +1,13 @@
+name: DevOps Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "push detected on main branch! Workflow executed successfully"
